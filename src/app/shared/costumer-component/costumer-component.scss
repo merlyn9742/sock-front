@@ -1,0 +1,55 @@
+.customer-container {
+  background-color: #f8faff;
+  min-height: 100vh;
+}
+
+.search-bar {
+  background: white;
+  border-radius: 12px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #eef2f8;
+  max-width: 400px;
+  
+  mat-icon { color: #a0aec0; }
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: #4e73df;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.whatsapp-btn {
+  color: #25d366;
+  background-color: rgba(37, 211, 102, 0.1);
+  &:hover {
+    background-color: rgba(37, 211, 102, 0.2);
+  }
+}
+
+.custom-table {
+  .mat-mdc-header-cell {
+    background-color: #fcfdff;
+    color: #4a5568;
+    font-weight: 600;
+  }
+  .table-row:hover {
+    background-color: #f9fbff;
+  }
+}

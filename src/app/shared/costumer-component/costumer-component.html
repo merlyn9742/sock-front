@@ -1,0 +1,62 @@
+<div class="customer-container p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="fw-bold mb-0 text-dark">Mis Clientes</h1>
+      <p class="text-muted mb-0">Directorio de compradores y prospectos</p>
+    </div>
+    <button mat-flat-button color="primary" class="rounded-pill px-4" (click)="openCustomerModal()">
+      <mat-icon class="me-1">person_add</mat-icon> 
+      Nuevo Cliente
+    </button>
+  </div>
+
+  <div class="search-bar mb-3">
+    <mat-icon>search</mat-icon>
+    <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar por nombre o teléfono...">
+  </div>
+
+  <mat-card class="border-0 shadow-sm overflow-hidden card-radius">
+    <table mat-table [dataSource]="dataSource" class="w-100 custom-table">
+      
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Cliente </th>
+        <td mat-cell *matCellDef="let c"> 
+          <div class="d-flex align-items-center py-2">
+            <div class="avatar me-3">{{ c.name[0] | uppercase }}</div>
+            <span class="fw-bold">{{ c.name }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> WhatsApp </th>
+        <td mat-cell *matCellDef="let c"> {{ c.phone }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let c" class="text-end pe-3">
+          <button mat-icon-button (click)="contactWhatsApp(c)" class="whatsapp-btn me-2" matTooltip="Enviar mensaje">
+            <mat-icon>chat</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="openCustomerModal(c)" class="me-2" matTooltip="Editar datos">
+            <mat-icon>edit_note</mat-icon>
+          </button>
+
+          <button mat-icon-button color="warn" (click)="deleteCustomer(c.id!)" matTooltip="Eliminar cliente">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+    </table>
+
+    <div *ngIf="dataSource.data.length === 0" class="text-center py-5">
+      <mat-icon class="text-muted" style="font-size: 48px; height: 48px; width: 48px;">people_outline</mat-icon>
+      <p class="text-muted mt-2">No hay clientes registrados aún.</p>
+    </div>
+  </mat-card>
+</div>

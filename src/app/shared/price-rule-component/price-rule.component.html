@@ -1,0 +1,48 @@
+<div class="rules-container p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mat-headline-5 mb-0 fw-bold text-primary">Configuración de Mayoreo</h2>
+      <p class="text-muted small">Define los descuentos por volumen para este modelo</p>
+    </div>
+    <button mat-mini-fab color="primary" (click)="addRule()" matTooltip="Añadir escala">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div class="rules-stack">
+    <mat-card *ngFor="let rule of rules; let i = index" class="rule-card mb-3 animate-in">
+      <mat-card-content class="d-flex align-items-center justify-content-between p-3">
+        
+        <div class="d-flex align-items-center flex-grow-1">
+          <div class="step-number me-3">{{ i + 1 }}</div>
+          <div>
+            <span class="d-block fw-bold text-dark">Rango de Compra</span>
+            <span class="badge bg-primary-subtle text-primary">
+              {{ rule.minQuantity }} - {{ rule.maxQuantity }} pares
+            </span>
+          </div>
+        </div>
+
+        <div class="price-section px-4 border-start border-end">
+          <span class="d-block text-muted small">Precio x Par</span>
+          <h3 class="mb-0 fw-extrabold text-success">
+            {{ rule.pricePerUnit | currency:'USD' }}
+          </h3>
+        </div>
+
+        <div class="ps-3">
+          <button mat-icon-button color="warn" (click)="removeRule(rule.id!)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div *ngIf="rules.length === 0" class="text-center py-5 border rounded-4 bg-light">
+      <mat-icon class="text-muted opacity-25" style="font-size: 48px; width: 48px; height: 48px;">
+        payments
+      </mat-icon>
+      <p class="text-muted mt-2">No hay reglas de mayoreo. Se usará el precio base.</p>
+    </div>
+  </div>
+</div>

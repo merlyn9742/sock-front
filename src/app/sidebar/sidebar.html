@@ -1,0 +1,30 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-row">
+      <span class="logo-icon">🧦</span>
+      <span class="logo-text">CalcetínPro</span>    
+    </div>
+    <p class="subtitle">Mayoreo de calcetines</p>
+  </div>
+
+  <nav class="nav-menu">
+    <a *ngFor="let item of navItems" 
+       [routerLink]="item.link" 
+       routerLinkActive="active" 
+       class="nav-item">
+      <i [class]="item.iconClass"></i>
+      <span>{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <p class="user-name">merlyn</p>
+      <p class="user-email">mciliasarellano@gmail.com</p>
+    </div>
+    <button class="logout-btn">
+      <i class="fas fa-sign-out-alt"></i>
+      Cerrar sesión
+    </button>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  height: 100%;
+  background-color: #12121f; /* El azul oscuro profundo de la imagen */
+  color: #a0a0b0; /* Color de texto grisáceo para los items no activos */
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #636375;
+  margin-top: 4px;
+  margin-left: 32px;
+}
+
+.nav-menu {
+  flex-grow: 1;
+  padding: 10px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  text-decoration: none;
+  color: #a0a0b0;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  gap: 12px;
+}
+
+.nav-item i {
+  font-size: 1.1rem;
+  width: 20px;
+}
+
+/* El estado Activo fiel a la imagen (Rojizo/Vino) */
+.nav-item.active {
+  background-color: rgba(225, 29, 72, 0.1); /* Fondo sutil rojizo */
+  color: #f43f5e; /* Color rosado/rojo de la imagen */
+  border-left: 4px solid #f43f5e; /* La barrita lateral indicadora */
+}
+
+.nav-item:hover:not(.active) {
+  background-color: #1a1a2e;
+  color: #ffffff;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #1f1f33;
+}
+
+.user-name {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.user-email {
+  color: #636375;
+  font-size: 0.75rem;
+  margin: 2px 0 15px 0;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #a0a0b0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+.logout-btn:hover {
+  color: #ffffff;
+}

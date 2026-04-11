@@ -1,0 +1,122 @@
+.inventory-wrapper {
+  background-color: #f4f7fe;
+  min-height: 100vh;
+}
+
+.search-box {
+  background: white;
+  border-radius: 10px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e7ff;
+  transition: all 0.3s;
+  
+  &:focus-within {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+  }
+
+  mat-icon { color: #a3b1cc; margin-right: 8px; }
+  input {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 0.9rem;
+    width: 200px;
+  }
+}
+
+.table-container {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.custom-table {
+  .mat-mdc-header-cell {
+    background-color: #fcfdff;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 20px;
+  }
+
+  .table-row {
+    transition: background 0.2s;
+    &:hover { background-color: #f8faff; }
+  }
+
+  .product-cell {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+    
+    .category-tag {
+      font-size: 0.65rem;
+      color: #4e73df;
+      background: rgba(78, 115, 223, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .product-name { font-weight: 600; color: #2e384d; }
+  }
+}
+
+.gender-pill {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  
+  &.hombre { background: #e0f2fe; color: #0369a1; }
+  &.mujer { background: #fdf2f8; color: #be185d; }
+  &.unisex { background: #f3e8ff; color: #7e22ce; }
+}
+
+.stock-status {
+  width: 140px;
+  .stock-count { font-size: 0.85rem; font-weight: 700; }
+  .stock-min { font-size: 0.7rem; color: #94a3b8; }
+  
+  .progress-track {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #10b981;
+    transition: width 0.5s ease-in-out;
+  }
+
+  &.critical {
+    .stock-count { color: #ef4444; }
+    .progress-fill { background: #ef4444; }
+  }
+}
+
+.price-text {
+  font-weight: 800;
+  color: #059669;
+  font-size: 1rem;
+}
+
+.empty-state {
+  padding: 60px;
+  text-align: center;
+  color: #64748b;
+  
+  .empty-icon {
+    font-size: 60px;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+    mat-icon { width: 60px; height: 60px; font-size: 60px; }
+  }
+}

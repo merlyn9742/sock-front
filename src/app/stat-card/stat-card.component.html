@@ -1,0 +1,9 @@
+<div class="card shadow-md p-4 rounded-lg bg-white border border-gray-100 flex flex-row items-center justify-between">
+    <div class="flex-grow">
+        <p class="text-sm text-gray-500">{{ title }}</p>
+        <p class="text-2xl font-bold text-gray-900">{{ value }}</p>
+    </div>
+    <div class="w-12 h-12 rounded-full flex items-center justify-center" [ngStyle]="{'background-color': iconBgColor}">
+        <i [class]="iconClass + ' text-xl'" [ngStyle]="{'color': iconColor}"></i>
+    </div>
+</div>
