@@ -10,7 +10,7 @@
     </button>
   </div>
 
-  <mat-card class="table-card mat-elevation-z3">
+  <mat-card class="table-card mat-elevation-z3" *ngIf="categoriesObs$ | async as categories">
     <mat-card-content class="p-0">
       <table mat-table [dataSource]="categories" class="w-100">
 

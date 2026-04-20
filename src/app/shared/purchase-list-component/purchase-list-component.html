@@ -1,0 +1,100 @@
+<ng-container *ngIf="purchases$ | async as purchases">
+  <div class="bundle-container animate-in">
+    
+    <header class="list-header">
+      <div class="title-group">
+        <h1>Entradas de Almacén</h1>
+        <p>Gestión de facturas y abastecimiento de inventario</p>
+      </div>
+      
+      <div class="header-actions">
+        <div class="quick-stats">
+          <div class="mini-stat">
+            <span class="s-label">Inversión</span>
+            <span class="s-value">{{ calculateTotalInvestment(purchases) | currency:'MXN' }}</span>
+          </div>
+        </div>
+        <button class="btn-primary" (click)="openPurchaseModal()">
+          <mat-icon>add_shopping_cart</mat-icon>
+          Registrar Compra
+        </button>
+      </div>
+    </header>
+
+    <div class="layout-grid-purchases">
+      <div class="card purchase-card" *ngFor="let p of purchases">
+        
+        <div class="purchase-main-info">
+          <div class="status-indicator"></div>
+          <div class="details">
+            <div class="supplier-row">
+              <h3>{{ p.supplierName }}</h3>
+              <div class="date-group">
+              <span class="date-badge" title="Fecha de Registro">
+                {{ p.createdAt | date:'dd/MM/yyyy HH:mm' }}
+              </span>
+              <span *ngIf="p.updatedAt && p.updatedAt !== p.createdAt" class="update-badge" title="Última actualización">
+                <mat-icon>edit</mat-icon> {{ p.updatedAt | date:'shortTime' }}
+              </span>
+            </div>
+              <span class="date-badge">{{ p.purchaseDate | date:'MMM d, yyyy' }}</span>
+            </div>
+            <div class="financial-info">
+              <span class="amount-label">Monto Factura</span>
+              <span class="amount-value">{{ p.totalInvoiceAmount | currency:'MXN' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="items-summary">
+          <span class="summary-label">Detalle de mercancia:</span>
+          <div class="item-tags">
+            <div class="product-group" *ngFor="let item of p.purchaseItemsRequest">
+              <span class="product-tag main">
+                {{ item.product?.name || 'Producto' }} ({{ item.totalUnitsAcquired }} pzas)
+              </span>
+              <span class="product-tag main"> 
+                Stock disponible {{item.stockRemaining}}
+              </span>
+              <span class="product-tag bulk" *ngIf="item.isBulk">
+                {{ item.bulksReceived }} Bulto/s de {{ item.unitsPerBulk }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="purchase-footer">
+          <div class="purchase-id">Folio #{{ p.id }}</div>
+          <div class="actions">
+            <button class="btn-icon view" title="Ver detalle">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button class="btn-icon delete" (click)="deletePurchase(p.id!)" title="Eliminar">
+              <mat-icon>delete_sweep</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="purchases.length === 0">
+      <div class="empty-icon">
+        <mat-icon>inventory</mat-icon>
+      </div>
+      <h3>No hay compras registradas</h3>
+      <p>Las facturas que registres aparecerán en este listado.</p>
+      <button class="btn-outline" (click)="openPurchaseModal()">Empezar ahora</button>
+    </div>
+
+    <mat-paginator 
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[1, 3, 5, 10, 25, 50]"
+      [pageIndex]="currentPage"
+      (page)="onPageChange($event)"
+      aria-label="Seleccionar página de compras"
+      class="custom-paginator">
+    </mat-paginator>
+
+  </div>
+</ng-container>

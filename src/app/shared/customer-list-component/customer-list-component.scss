@@ -1,0 +1,178 @@
+/* Variables de consistencia */
+$primary: #2563eb;
+$text-main: #1e293b;
+$text-muted: #64748b;
+$bg-app: #f1f5f9;
+$border-color: #e2e8f0;
+$radius: 12px;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+.bundle-container {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Header */
+.form-header {
+  margin-bottom: 2rem;
+  .header-main {
+    display: flex;
+    justify-content: space-between; // Separa título del botón "Nuevo"
+    align-items: center;
+    gap: 1.5rem;
+    
+    .header-text {
+      h1 { margin: 0; font-size: 1.8rem; font-weight: 850; color: $text-main; letter-spacing: -0.5px; }
+      p { margin: 4px 0 0; color: $text-muted; font-size: 0.95rem; }
+    }
+  }
+}
+
+/* Grid Responsivo de Clientes */
+.layout-grid-customers {
+  display: grid;
+  // Ajusta automáticamente el número de columnas según el ancho disponible
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Tarjeta de Cliente */
+.customer-card {
+  background: white;
+  border-radius: $radius;
+  border: 1.5px solid $border-color;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  box-shadow: $shadow;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: $primary;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+  }
+
+  .customer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      background: #eff6ff;
+      color: $primary;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      border: 1px solid rgba(37, 99, 235, 0.1);
+    }
+
+    .details {
+      h3 { margin: 0; font-size: 1.05rem; font-weight: 700; color: $text-main; }
+      span { 
+        display: flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-size: 0.85rem; 
+        color: $text-muted; 
+        margin-top: 2px;
+        
+        mat-icon { font-size: 14px; width: 14px; height: 14px; }
+      }
+    }
+  }
+
+  .customer-actions {
+    display: flex;
+    gap: 8px;
+
+    button {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: $text-muted;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+
+      mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+      &:hover {
+        background: $primary;
+        color: white;
+      }
+
+      &.delete:hover {
+        background: #ef4444;
+        color: white;
+      }
+    }
+  }
+}
+
+/* Botón Nuevo Cliente (Clase compartida con otros componentes) */
+.btn-add-item {
+  height: 44px;
+  padding: 0 20px;
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #cbd5e1;
+  
+  mat-icon { font-size: 64px; width: 64px; height: 64px; margin-bottom: 1rem; }
+  p { font-size: 1.1rem; font-weight: 600; margin: 0; }
+}
+
+/* Animación de entrada */
+.animate-in {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Media Queries */
+@media (max-width: 640px) {
+  .header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .btn-add-item { width: 100%; justify-content: center; }
+  }
+}

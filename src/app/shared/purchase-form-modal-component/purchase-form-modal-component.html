@@ -1,0 +1,124 @@
+<div class="modal-container">
+  <header class="modal-header">
+    <div class="header-content">
+      <h2>Registrar Compra Multiproducto</h2>
+      <p>Gestiona la entrada de mercancía y costos de factura.</p>
+    </div>
+  </header>
+
+  <form [formGroup]="purchaseForm" (ngSubmit)="save()">
+    <div class="layout-grid">
+      <div class="card mb-4">
+        <h3 class="section-title">Información de Factura</h3>
+        <div class="row general-info">
+          <div class="field-control flex-grow">
+            <label>Proveedor</label>
+            <input formControlName="supplierName" placeholder="Ej. Distribuidora Global S.A.">
+          </div>
+          <div class="field-control width-200">
+            <label>Total de Factura ($)</label>
+            <input  formControlName="totalInvoiceAmount" placeholder="0.00">
+          </div>
+        </div>
+      </div>
+
+      <div formArrayName="purchaseItemsRequest" class="items-list-container">
+        <div *ngFor="let item of itemsArray.controls; let i = index" [formGroupName]="i" class="card mb-3 item-card animate-in">
+          
+          <div class="item-header">
+            <div class="item-info-main">
+              <span class="item-number">Producto #{{ i + 1 }}</span>
+              
+              <div class="switches-group">
+                <div class="switch-control">
+                  <label class="switch-label">¿Por bulto?</label>
+                  <input type="checkbox" formControlName="isBulk" class="custom-switch">
+                </div>
+                <div class="switch-control">
+                  <label class="switch-label">¿Gravado (IVA)?</label>
+                  <input type="checkbox" formControlName="isTaxed" class="custom-switch">
+                </div>
+              </div>
+            </div>
+            
+            <button type="button" class="btn-icon-delete" (click)="removeItem(i)" *ngIf="itemsArray.length > 1" title="Quitar producto">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+
+          <div class="grid-2-cols mb-3">
+            <div class="field-control flex-grow">
+              <label>Seleccionar Producto</label>
+              <select formControlName="productId">
+                <option value="">Seleccionar...</option>
+                <option *ngFor="let p of products" [value]="p.id">{{ p.name }}</option>
+              </select>
+            </div>
+            
+            <div class="field-control" [class.highlight-auto]="item.get('isBulk')?.value">
+              <label>Costo Neto Unitario {{ item.get('isBulk')?.value ? '(Auto)' : '' }}</label>
+              <input formControlName="unitCostNet" placeholder="0.00">
+            </div>
+                      
+          </div>
+
+          <div class="mb-3">
+            <div class="field-control flex-grow">
+              <div class="field-control" [class.dimmed]="!item.get('isBulk')?.value">
+                <label>Precio por Bulto</label>
+                <input formControlName="pricePerBulk" placeholder="0.00">
+              </div>
+            </div>
+          </div>
+                         
+
+          <div class="divider mb-3"></div>
+
+          <div class="grid-2-cols mb-3">
+            <div class="field-control" [class.dimmed]="!item.get('isBulk')?.value">
+              <label>Bultos Recibidos</label>
+              <input formControlName="bulksReceived" placeholder="0">
+            </div>
+            <div class="field-control" [class.dimmed]="!item.get('isBulk')?.value">
+              <label>Unidades x Bulto</label>
+              <input formControlName="unitsPerBulk" placeholder="0">
+            </div>           
+          </div>
+
+          <div class="grid-2-cols mb-3">          
+            <div class="field-control" [class.dimmed]="item.get('isBulk')?.value">
+              <label>Unidades Sueltas</label>
+              <input formControlName="individualUnitsReceived" placeholder="0">
+            </div>
+            <div class="field-control highlight-field">
+              <label>Total unidades adquiridas</label>
+              <input formControlName="totalUnitsAcquired" placeholder="0">
+            </div>
+          </div>
+
+
+          <div class="divider mb-3"></div>
+
+          <div class="row footer-row justify-end">
+            <div class="field-control width-220">
+              <label>Total Pagado (Renglón)</label>
+              <input formControlName="totalPaid" class="total-input" placeholder="0.00">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button type="button" class="btn-add-row mt-3 mb-4" (click)="addItem()">
+        <mat-icon>add_circle_outline</mat-icon> Agregar otro producto a esta factura
+      </button>
+    </div>
+
+    <footer class="modal-actions mt-4">
+      <button type="button" class="btn-cancel" (click)="close()">Cancelar</button>
+      <button type="submit" class="btn-save" [disabled]="purchaseForm.invalid">
+        Procesar Entrada de Almacén
+      </button>
+    </footer>
+  </form>
+</div>

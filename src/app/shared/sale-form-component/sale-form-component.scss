@@ -1,0 +1,264 @@
+/* Variables de Diseño (Consistentes con tu marca) */
+$primary: #2563eb;
+$primary-hover: #1d4ed8;
+$secondary: #64748b;
+$bg-app: #f1f5f9;
+$border: #e2e8f0;
+$text-dark: #1e293b;
+$text-muted: #64748b;
+$radius: 12px;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+.bundle-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Header de Venta */
+.form-header {
+  margin-bottom: 2rem;
+  .header-text {
+    h1 { margin: 0; font-size: 1.8rem; font-weight: 850; color: $text-dark; letter-spacing: -0.5px; }
+    p { margin: 4px 0 0; color: $text-muted; font-size: 0.95rem; }
+  }
+}
+
+/* Layout */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Cards Generales */
+.card {
+  background: white;
+  border-radius: $radius;
+  border: 1.5px solid $border;
+  box-shadow: $shadow;
+  padding: 1.5rem;
+  &.mb-4 { margin-bottom: 1.5rem; }
+}
+
+/* Controles de Formulario */
+.field-control {
+  display: flex;
+  flex-direction: column;
+  label { font-size: 11px; font-weight: 700; color: $text-muted; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; }
+  
+  input, select {
+    height: 42px;
+    border: 1.5px solid $border;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    color: $text-dark;
+    transition: all 0.2s;
+    &:focus { border-color: $primary; outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+  }
+
+  &.width-100 { width: 100px; }
+  &.flex-grow { flex-grow: 1; }
+}
+
+/* Sección de Items */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid #f8fafc;
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    h3 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+    .title-icon { color: $primary; }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+/* Filas de Venta */
+.sale-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  align-items: flex-end;
+
+  &:last-child { border-bottom: none; }
+
+  /* Variante para resaltar que es un paquete */
+  &.bundle-variant {
+    background-color: #f0f7ff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px dashed $primary;
+    margin-top: 10px;
+  }
+}
+
+/* Botones */
+.btn-add-item {
+  height: 38px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 8px;
+  background: $primary;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: $primary-hover; transform: translateY(-1px); }
+  &.secondary { background: #e0e7ff; color: $primary; &:hover { background: #d0d7f7; } }
+}
+
+.btn-remove {
+  height: 42px;
+  width: 42px;
+  border: none;
+  background: #fff1f2;
+  color: #f43f5e;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover { background: #f43f5e; color: white; }
+}
+
+/* Panel de Cobro (Sticky) */
+.summary-card {
+  position: sticky;
+  top: 1.5rem;
+  
+  .summary-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    mat-icon { color: $primary; }
+    h3 { margin: 0; font-size: 1.1rem; }
+  }
+
+  .main-price-display {
+    background: #f8fafc;
+    border: 2px solid $border;
+    border-radius: 12px;
+    position: relative;
+    padding: 10px 15px;
+
+    .price-symbol { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.8rem; font-weight: 900; color: $primary; }
+    input { width: 100%; border: none; background: transparent; font-size: 2.5rem; font-weight: 900; color: $primary; padding-left: 30px; text-align: right; pointer-events: none; }
+  }
+
+  .helper-text { font-size: 12px; color: $text-muted; text-align: center; margin-top: 10px; display: block; }
+}
+
+.math-details {
+  margin: 1.5rem 0;
+  .math-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    &.total {
+      border-top: 2px solid $border;
+      padding-top: 15px;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: $text-dark;
+      .val.highlight { color: $primary; font-size: 1.3rem; }
+    }
+  }
+}
+
+.summary-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .btn-save {
+    background: #10b981; /* Color verde para "Cobrar" */
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover { background: #059669; transform: scale(1.02); }
+    &:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border: 1.5px solid $border;
+    color: $text-muted;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    &:hover { background: #fef2f2; border-color: #fee2e2; color: #ef4444; }
+  }
+}
+
+/* Empty State */
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #cbd5e1;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 10px; }
+  p { margin: 0; font-size: 0.9rem; font-weight: 600; }
+}
+
+/* Animaciones */
+.animate-in { animation: slideUp 0.3s ease-out; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.summary-divider { height: 1.5px; background: #f1f5f9; margin: 1.5rem 0; }
+
+@media (max-width: 992px) {
+  .layout-grid { grid-template-columns: 1fr; }
+  .side-column { position: static; }
+}
+
+.rules-table {
+  tr.active-rule {
+    background-color: #ecfdf5; // Verde muy tenue
+    td {
+      color: #059669;
+      font-weight: 800;
+      border-top: 1px solid #10b981;
+      border-bottom: 1px solid #10b981;
+    }
+  }
+}
+
+.unit-price-hint {
+  color: #10b981;
+  font-weight: 800;
+  display: block;
+  margin-top: 4px;
+}

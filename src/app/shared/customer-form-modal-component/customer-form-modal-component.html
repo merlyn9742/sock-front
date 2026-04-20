@@ -1,0 +1,17 @@
+<div class="modal-container">
+      <h2>{{ data ? 'Editar' : 'Nuevo' }} Cliente</h2>
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="field-control mb-3">
+          <label>Nombre Completo</label>
+          <input formControlName="name" placeholder="Ej. Juan Pérez">
+        </div>
+        <div class="field-control mb-4">
+          <label>Teléfono / WhatsApp</label>
+          <input formControlName="phone" placeholder="Ej. 2721234567">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="close()">Cancelar</button>
+          <button type="submit" class="btn-save" [disabled]="form.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>

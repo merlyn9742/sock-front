@@ -1,0 +1,202 @@
+/* Variables de Diseño */
+$primary: #2563eb;
+$primary-dark: #1d4ed8;
+$text-main: #1e293b;
+$text-muted: #64748b;
+$bg-app: #f1f5f9;
+$border-color: #e2e8f0;
+$radius: 12px;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+.bundle-container {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Header */
+.form-header {
+  margin-bottom: 2rem;
+  .header-main {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    .btn-back {
+      background: white; border: 1.5px solid $border-color; border-radius: 10px;
+      padding: 8px; cursor: pointer; color: $text-main; transition: all 0.2s;
+      &:hover { background: $bg-app; border-color: $text-muted; }
+    }
+    h1 { margin: 0; font-size: 1.75rem; font-weight: 800; color: $text-main; letter-spacing: -0.5px; }
+    p { margin: 4px 0 0; color: $text-muted; font-size: 0.95rem; }
+  }
+}
+
+/* Layout Grid */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Tarjetas */
+.card {
+  background: white; border-radius: $radius; border: 1.5px solid $border-color;
+  box-shadow: $shadow; padding: 1.5rem;
+}
+
+/* Controles de Formulario Unificados */
+.field-control {
+  display: flex; flex-direction: column;
+  label { font-size: 11px; font-weight: 700; color: $text-muted; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+  
+  input, select {
+    height: 44px; border: 1.5px solid $border-color; border-radius: 8px;
+    padding: 0 12px; font-size: 0.9rem; color: $text-main; background: white;
+    transition: all 0.2s;
+    &:focus { border-color: $primary; outline: none; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08); }
+    &::placeholder { color: #cbd5e1; }
+  }
+}
+
+/* Fila de Items */
+.items-list {
+  .item-wrapper {
+    background: white; border: 1.5px solid $border-color; border-radius: $radius;
+    margin-bottom: 1.25rem; overflow: hidden; transition: border-color 0.2s;
+    &:hover { border-color: #cbd5e1; }
+  }
+
+  .item-row {
+    padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-end;
+    .field-product { flex: 3; }
+    .field-qty { width: 90px; }
+    .field-price { flex: 1.5; }
+    
+    .input-currency-wrapper {
+      position: relative;
+      .currency-symbol { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: $text-muted; font-weight: 600; }
+      input { padding-left: 28px; }
+    }
+  }
+}
+
+.action-control {
+  .btn-remove {
+    height: 44px; width: 44px; border: none; background: #fee2e2; color: #ef4444;
+    border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    &:hover { background: #ef4444; color: white; }
+  }
+}
+
+/* Sugerencias de Reglas */
+.rules-hint {
+  background: #f8fafc; border-top: 1.5px dashed $border-color; padding: 1rem 1.5rem;
+  .hint-header {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
+    color: $primary; margin-bottom: 12px;
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+  .rules-table {
+    width: 100%; border-collapse: collapse;
+    th { text-align: left; font-size: 11px; color: $text-muted; text-transform: uppercase; padding-bottom: 8px; }
+    td { font-size: 13px; color: $text-main; padding: 6px 0; border-top: 1px solid #f1f5f9; }
+    .text-suggested { color: #10b981; font-weight: 700; }
+  }
+}
+
+/* Resumen Lateral (Calculado) */
+.summary-card {
+  position: sticky; top: 2rem;
+  .summary-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; color: $text-main; mat-icon { color: $primary; } h3 { margin: 0; font-size: 1.1rem; font-weight: 800; } }
+  
+  .main-price-display {
+    background: #f1f5f9; border: 2px solid $border-color; border-radius: 12px;
+    position: relative; padding: 8px 15px; margin-top: 5px;
+    .price-symbol { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 900; color: $primary; }
+    input { background: transparent; border: none; width: 100%; font-size: 2rem; font-weight: 900; color: $primary; padding-left: 30px; cursor: default; }
+  }
+  .helper-text { font-size: 11px; color: $text-muted; margin-top: 6px; display: block; }
+}
+
+.math-details {
+  margin: 1.5rem 0;
+  .math-row {
+    display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: $text-muted;
+    &.total { border-top: 1.5px solid $border-color; padding-top: 12px; margin-top: 12px; color: $text-main; font-weight: 800; .val.highlight { color: $primary; font-size: 1.25rem; } }
+  }
+}
+
+.summary-actions {
+  display: flex; flex-direction: column; gap: 12px;
+  .btn-save {
+    background: $primary; color: white; border: none; padding: 14px; border-radius: 10px;
+    font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    &:hover { background: $primary-dark; transform: translateY(-1px); }
+    &:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+  }
+  .btn-cancel {
+    background: transparent; border: 1.5px solid $border-color; color: $text-muted;
+    padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer;
+    &:hover { background: #fef2f2; border-color: #fecaca; color: #ef4444; }
+  }
+}
+
+/* Animaciones */
+.animate-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsivo */
+@media (max-width: 992px) {
+  .layout-grid { grid-template-columns: 1fr; }
+  .side-column { position: static; }
+}
+
+.btn-add-item {
+  // Disposición y Alineación
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  // Dimensiones y Espaciado
+  padding: 8px 16px;
+  height: 40px;
+  
+  // Estilo Visual
+  background-color: #2563eb; // Azul primario consistente con tu marca
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  
+  // Tipografía
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  // Icono (si usas mat-icon)
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  // Estados
+  &:hover {
+    background-color: #1d4ed8; // Un tono más oscuro al pasar el mouse
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+
+  &:active {
+    background-color: #1e40af;
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}

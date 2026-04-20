@@ -6,9 +6,13 @@ import { PriceRule } from '../models/PriceRule';
 
 @Injectable({ providedIn: 'root' })
 export class PriceRuleService {
-  private apiUrl = 'http://localhost:8080/price-rules';
+  private apiUrl = 'http://localhost:8080/price-rule';
 
   constructor(private http: HttpClient) {}
+
+  getAllPriceRules(): Observable<Map<number, Array<PriceRule>>> {
+    return this.http.get<Map<number, Array<PriceRule>>>(this.apiUrl);
+  }
 
   // Obtener todas las reglas de un producto específico
   getByProduct(productId: number): Observable<PriceRule[]> {

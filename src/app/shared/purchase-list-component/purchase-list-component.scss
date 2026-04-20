@@ -1,0 +1,333 @@
+/* --- Variables de Diseño --- */
+$primary: #2563eb;
+$primary-dark: #1d4ed8;
+$bg-main: #f8fafc;
+$text-main: #0f172a;
+$text-muted: #64748b;
+$border-color: #e2e8f0;
+$card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$radius: 16px;
+
+/* --- Contenedor Principal --- */
+.bundle-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: transparent;
+
+  &.animate-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+}
+
+/* --- Header de la Lista --- */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+
+  .title-group {
+    h1 {
+      margin: 0;
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: $text-main;
+      letter-spacing: -0.5px;
+    }
+    p {
+      margin: 6px 0 0;
+      color: $text-muted;
+      font-size: 1rem;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .quick-stats {
+      .mini-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .s-label { font-size: 11px; text-transform: uppercase; font-weight: 700; color: $text-muted; }
+        .s-value { font-size: 1.25rem; font-weight: 800; color: $primary; }
+      }
+    }
+  }
+}
+
+/* --- Botón Primario --- */
+.btn-primary {
+  background: $primary;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+  &:hover {
+    background: $primary-dark;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+/* --- Grid de Compras --- */
+.layout-grid-purchases {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- Tarjeta de Compra --- */
+.purchase-card {
+  background: white;
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: lighten($primary, 30%);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .status-indicator {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: $primary;
+    border-radius: $radius 0 0 $radius;
+  }
+}
+
+.purchase-main-info {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .details {
+    flex: 1;
+    .supplier-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      
+      h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: $text-main;
+        line-height: 1.2;
+      }
+      .date-badge {
+        font-size: 11px;
+        background: $bg-main;
+        padding: 4px 8px;
+        border-radius: 6px;
+        color: $text-muted;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.financial-info {
+  margin-top: 1rem;
+  .amount-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $text-muted;
+    letter-spacing: 0.5px;
+  }
+  .amount-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: $text-main;
+    margin-top: 2px;
+  }
+}
+
+/* --- Resumen de Productos e Ítems --- */
+.items-summary {
+  margin: 1.25rem 0;
+  padding: 1rem 0;
+  border-top: 1px dashed $border-color;
+  border-bottom: 1px dashed $border-color;
+
+  .summary-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: $text-muted;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .item-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+
+    .product-tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+
+      &.main {
+        background: lighten($primary, 50%);
+        color: $text-main;
+        border: 1px solid lighten($primary, 40%);
+      }
+      &.bulk {
+        background: #f0fdf4;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+/* --- Footer de la Tarjeta --- */
+.purchase-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+
+  .purchase-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: lighten($text-muted, 15%);
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+
+    .btn-icon {
+      background: transparent;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s;
+
+      mat-icon { font-size: 20px; }
+
+      &.view {
+        color: $text-muted;
+        &:hover { background: $bg-main; color: $text-main; }
+      }
+
+      &.delete {
+        color: #f87171;
+        &:hover { background: #fef2f2; color: #dc2626; }
+      }
+    }
+  }
+}
+
+/* --- Estado Vacío --- */
+.empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: white;
+  border-radius: $radius;
+  border: 2px dashed $border-color;
+  margin-top: 2rem;
+
+  .empty-icon {
+    margin-bottom: 1.5rem;
+    mat-icon {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      color: $border-color;
+    }
+  }
+
+  h3 { font-size: 1.5rem; font-weight: 800; color: $text-main; margin: 0; }
+  p { color: $text-muted; margin: 0.5rem 0 1.5rem; }
+
+  .btn-outline {
+    background: white;
+    color: $primary;
+    border: 2px solid $primary;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover { background: $primary; color: white; }
+  }
+}
+
+/* --- Animaciones --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsividad --- */
+@media (max-width: 768px) {
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .header-actions {
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+  }
+
+  .layout-grid-purchases {
+    grid-template-columns: 1fr;
+  }
+}
+
+.custom-paginator {
+  margin-top: 2rem;
+  background: transparent !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: flex-end;
+}
+
+// Opcional: ajustar el grid si hay pocos elementos
+.layout-grid-purchases {
+  min-height: 400px; 
+}

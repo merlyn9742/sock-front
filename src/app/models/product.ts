@@ -1,3 +1,5 @@
+import { Category } from "./categoryModels";
+
 export interface Product {
   id?: number;
   name: string;
@@ -5,8 +7,5 @@ export interface Product {
   currentStock: number;
   minStockAlert: number;
   basePrice: number;
-  category: {
-    id: number;
-    name?: string;
-  };
+category: Category;
 }

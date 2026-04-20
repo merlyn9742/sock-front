@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -17,16 +18,25 @@ import { MatChipsModule } from '@angular/material/chips';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit{
-  categories: Category[] = [];
+  categories: Array<Category>[] = [];
 
-  constructor(private service: CategoryService) {}
+     categoriesObs$!: Observable<Category[]>;
+
+  constructor(private serviceCategory: CategoryService) {}
+
+
+
 
   ngOnInit(): void {
     this.loadCategories();
   }
 
   loadCategories() {
-    this.service.getAll().subscribe(data => this.categories = data);
+    this.categoriesObs$ = this.serviceCategory.getAll()
+  .pipe(categories => {    
+    return categories;
+  });
+
   }
 
   edit(category: Category) {
@@ -51,8 +61,8 @@ export class CategoryComponent implements OnInit{
 });
     if (name) {
       const obs = category 
-        ? this.service.update(category.id!, { name }) 
-        : this.service.create({ name });
+        ? this.serviceCategory.update(category.id!, { name }) 
+        : this.serviceCategory.create({ name });
 
       obs.subscribe(() => this.loadCategories());
     }
@@ -60,7 +70,7 @@ export class CategoryComponent implements OnInit{
 
   delete(id: number) {
     if (confirm('¿Estás seguro de eliminar esta categoría?')) {
-      this.service.delete(id).subscribe(() => this.loadCategories());
+      this.serviceCategory.delete(id).subscribe(() => this.loadCategories());
     }
   }
   

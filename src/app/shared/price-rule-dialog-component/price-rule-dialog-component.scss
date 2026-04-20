@@ -1,0 +1,124 @@
+// Variables
+$primary: #2563eb;
+$primary-light: rgba(37, 99, 235, 0.1);
+$success: #10b981;
+$slate-800: #1e293b;
+$slate-600: #475569;
+$slate-400: #94a3b8;
+$slate-200: #e2e8f0;
+$bg-light: #f8fafc;
+
+// Header
+.dialog-header-modern {
+  padding: 24px 32px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $slate-200;
+
+  .title-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    .header-icon-box {
+      background: $primary-light;
+      color: $primary;
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      mat-icon { font-size: 28px; width: 28px; height: 28px; }
+    }
+
+    h2 { margin: 0 !important; font-weight: 800; color: $slate-800; font-size: 1.4rem; letter-spacing: -0.5px; }
+    .subtitle { margin: 4px 0 0; font-size: 0.9rem; color: $slate-600; }
+  }
+
+  .close-btn { color: $slate-400; &:hover { color: #ef4444; background: #fef2f2; } }
+}
+
+// Content Layout
+.modern-dialog-content {
+  padding: 24px 32px 32px !important;
+  background: white;
+  max-height: 70vh;
+
+  .section-card {
+    background: white;
+    border: 1px solid $slate-200;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: border-color 0.2s;
+
+    &:hover { border-color: $slate-400; }
+    &.highlight { background: $bg-light; border-style: dashed; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 24px;
+      mat-icon { font-size: 20px; width: 20px; height: 20px; color: $primary; }
+      span { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: $slate-600; letter-spacing: 1px; }
+    }
+  }
+}
+
+// Spacing & Inputs
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; // Espacio entre inputs verticales
+}
+
+.dual-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px; // Espacio entre inputs horizontales
+}
+
+.w-100 { width: 100%; }
+
+// Profit Widget
+.profit-preview {
+  margin-top: 24px;
+  background: $slate-800;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+
+  .preview-item {
+    text-align: center;
+    .l { display: block; font-size: 0.7rem; color: $slate-400; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+    .v { font-weight: 800; font-size: 1.1rem; color: white; }
+    .success { color: $success; }
+    .percent { color: #60a5fa; }
+  }
+
+  .preview-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.1); }
+}
+
+// Footer
+.dialog-actions-modern {
+  padding: 24px 32px !important;
+  background: $bg-light;
+  border-top: 1px solid $slate-200;
+  gap: 16px;
+
+  .cancel-btn { font-weight: 700; color: $slate-600; padding: 0 20px; }
+  .save-btn {
+    height: 52px;
+    padding: 0 28px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba($primary, 0.25);
+    display: flex; align-items: center; gap: 10px;
+    
+    mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  }
+}
+

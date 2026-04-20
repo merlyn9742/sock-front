@@ -1,0 +1,34 @@
+<div class="bundle-container animate-in">
+  <header class="form-header">
+    <div class="header-main">
+      <div class="header-text">
+        <h1>Directorio de Clientes</h1>
+        <p>Gestiona los contactos y revisa su historial de compras.</p>
+      </div>
+      <button class="btn-add-item" (click)="openForm()">
+        <mat-icon>person_add</mat-icon> Nuevo Cliente
+      </button>
+    </div>
+  </header>
+
+  <div class="layout-grid-customers">
+    <div class="card customer-card" *ngFor="let c of customers">
+      <div class="customer-info">
+        <div class="avatar">{{ c.name.charAt(0) }}</div>
+        <div class="details">
+          <h3>{{ c.name }}</h3>
+          <span><mat-icon>phone</mat-icon> {{ c.phone || 'Sin teléfono' }}</span>
+        </div>
+      </div>
+      <div class="customer-actions">
+        <button (click)="openForm(c)" title="Editar"><mat-icon>edit</mat-icon></button>
+        <button class="delete" (click)="deleteCustomer(c.id!)" title="Eliminar"><mat-icon>delete</mat-icon></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="customers.length === 0">
+    <mat-icon>group_off</mat-icon>
+    <p>Aún no tienes clientes registrados.</p>
+  </div>
+</div>

@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './app.scss'
 })
 export class App {
-isMenuOpen = true;
+isMenuOpen = false;
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

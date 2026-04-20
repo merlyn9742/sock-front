@@ -1,0 +1,163 @@
+<div class="bundle-container animate-in">
+  <form [formGroup]="saleForm" (ngSubmit)="onSubmit()">
+    <header class="form-header">
+      <div class="header-main">
+        <div class="header-text">
+          <h1>Punto de Venta</h1>
+          <p>Registra la salida de mercancía por producto o paquetes armados.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout-grid">
+      <main class="main-column">
+        <section class="card mb-4">
+          <div class="field-control">
+            <label>Cliente / Destino</label>
+            <select formControlName="customerId">
+              <option [ngValue]="null">Público General / Mostrador</option>
+              <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="card items-section">
+          <div class="section-header">
+            <div class="section-title">
+              <mat-icon class="title-icon">shopping_cart</mat-icon>
+              <h3>Artículos a Vender</h3>
+            </div>
+            <div class="action-buttons">
+              <button type="button" class="btn-add-item secondary" (click)="addProduct()">
+                <mat-icon>add</mat-icon> Producto
+              </button>
+              <button type="button" class="btn-add-item" (click)="addBundle()">
+                <mat-icon>auto_awesome</mat-icon> Bundle
+              </button>
+            </div>
+          </div>
+
+          <div class="items-list">
+            <div formArrayName="productsSold">
+              <div *ngFor="let p of productsArray.controls; let i = index" [formGroupName]="i" class="item-wrapper mb-3">
+                <div class="item-row sale-row">
+                  <div class="field-control flex-grow">
+                    <label>Producto Individual</label>
+                    <select formControlName="productId">
+                      <option value="">Seleccionar...</option>
+                      <option *ngFor="let prod of products" [value]="prod.id">{{ prod.name }} (Stock: {{prod.currentStock}})</option>
+                    </select>
+                  </div>
+                  <div class="field-control width-100">
+                    <label>Cant.</label>
+                    <input type="number" formControlName="quantity">
+                    <small class="unit-price-hint" *ngIf="p.get('productId')?.value">
+                      {{ getUnitPriceForLine(p.value) | currency:'MXN' }} c/u
+                    </small>
+                  </div>
+                  <div class="action-control">
+                    <button type="button" class="btn-remove" (click)="removeProduct(i)">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="rules-hint" *ngIf="rulesByProduct[p.get('productId')?.value] && rulesByProduct[p.get('productId')?.value].length > 0">
+                  <div class="hint-header">
+                    <mat-icon>auto_awesome</mat-icon>
+                    <span>Escalas de mayoreo para este producto</span>
+                  </div>
+                  <div class="rules-table-container">
+                    <table class="rules-table">
+                      <thead>
+                        <tr>
+                          <th>Rango (pzs)</th>
+                          <th>Precio Unitario</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let rule of rulesByProduct[p.get('productId')?.value]" 
+                            [class.active-rule]="p.get('quantity')?.value >= rule.minQuantity && p.get('quantity')?.value <= rule.maxQuantity">
+                          <td>{{ rule.minQuantity }} - {{ rule.maxQuantity }} pzs</td>
+                          <td class="text-suggested">{{ rule.salePrice | currency:'MXN' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div formArrayName="bundlesSold">
+              <div *ngFor="let b of bundlesArray.controls; let i = index" [formGroupName]="i" class="item-row sale-row bundle-variant mb-3">
+                <div class="field-control flex-grow">
+                  <label>Paquete / Bundle</label>
+                  <select formControlName="bundleId">
+                    <option value="">Seleccionar Paquete...</option>
+                    <option *ngFor="let bun of availableBundles" [value]="bun.id">{{ bun.name }} - {{ bun.fixedPrice | currency:'MXN' }}</option>
+                  </select>
+                </div>
+                <div class="field-control width-100">
+                  <label>Cant.</label>
+                  <input type="number" formControlName="quantity">
+                </div>
+                <div class="action-control">
+                  <button type="button" class="btn-remove" (click)="removeBundle(i)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="empty-state" *ngIf="productsArray.length === 0 && bundlesArray.length === 0">
+              <mat-icon>inventory</mat-icon>
+              <p>No hay artículos en la lista. Agrega uno para comenzar.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="side-column">
+        <div class="card summary-card">
+          <div class="summary-header">
+            <mat-icon>receipt_long</mat-icon>
+            <h3>Total de Venta</h3>
+          </div>
+
+          <div class="summary-body">
+            <div class="field-control">
+              <label>Monto Estimado</label>
+              <div class="main-price-display">
+                <span class="price-symbol">$</span>
+                <input type="text" [value]="estimatedTotal | number:'1.2-2'" readonly>
+              </div>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="math-details">
+              <div class="math-row">
+                <span>Líneas de venta:</span>
+                <span class="val">{{ productsArray.length + bundlesArray.length }}</span>
+              </div>
+              <div class="math-row total">
+                <span>Total a Cobrar:</span>
+                <span class="val highlight">{{ estimatedTotal | currency:'MXN' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <footer class="summary-actions">
+            <button type="submit" class="btn-save" [disabled]="saleForm.invalid || (productsArray.length === 0 && bundlesArray.length === 0)">
+              <mat-icon>check_circle</mat-icon>
+              Confirmar y Cobrar
+            </button>
+            <button type="button" class="btn-cancel" (click)="resetForm()">
+              Limpiar Todo
+            </button>
+          </footer>
+        </div>
+      </aside>
+    </div>
+  </form>
+</div>
