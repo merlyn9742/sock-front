@@ -1,0 +1,143 @@
+// Colores Dashboard
+$slate-50: #f8fafc;
+$slate-200: #e2e8f0;
+$slate-400: #94a3b8;
+$slate-500: #64748b;
+$slate-800: #1e293b;
+$slate-900: #0f172a;
+$primary: #2563eb;
+$success: #10b981;
+$danger: #f43f5e;
+
+.main-content {
+  padding: 1.5rem;
+  background-color: $slate-50;
+  min-height: 100vh;
+}
+
+.glass-card {
+  background: white;
+  border-radius: 1.25rem;
+  border: 1px solid $slate-200;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+// Botón Personalizado
+.btn-primary-custom {
+  background-color: $primary;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba($primary, 0.3);
+
+  &:hover {
+    background-color: darken($primary, 10%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px -1px rgba($primary, 0.4);
+  }
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+// Tabla Estilizada
+.custom-table {
+  background: transparent;
+
+  th.mat-mdc-header-cell {
+    background: #f8fafc;
+    color: $slate-500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    padding: 1rem;
+    border-bottom: 2px solid $slate-200;
+  }
+
+  td.mat-mdc-cell {
+    padding: 1rem;
+    border-bottom: 1px solid lighten($slate-200, 5%);
+  }
+
+  .hover-row {
+    transition: background 0.1s;
+    &:hover { background-color: #f1f5f9; }
+  }
+}
+
+// Elementos de la celda
+.folio-badge {
+  font-family: 'JetBrains Mono', monospace;
+  background: $slate-900;
+  color: white;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  background: $slate-200;
+  color: $slate-800;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.item-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f1f5f9;
+  border-radius: 2rem;
+  padding: 2px 10px;
+  margin-right: 5px;
+  font-size: 0.75rem;
+  color: $slate-800;
+  border: 1px solid $slate-200;
+
+  .qty { font-weight: 800; color: $primary; }
+  .tiny-icon { font-size: 14px; width: 14px; height: 14px; color: #f59e0b; }
+}
+
+.text-tax { font-size: 0.7rem; color: $slate-400; }
+
+.profit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  
+  .profit-amount {
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .isr-tag {
+    font-size: 0.65rem;
+    background: lighten($danger, 35%);
+    color: $danger;
+    padding: 0 4px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+}
+
+.btn-delete-hover {
+  color: $slate-400;
+  &:hover { color: $danger; background-color: lighten($danger, 40%); }
+}
+
+.custom-paginator {
+  background: transparent;
+  border-top: 1px solid $slate-200;
+}

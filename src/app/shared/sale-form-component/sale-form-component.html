@@ -79,7 +79,7 @@
                         <tr *ngFor="let rule of rulesByProduct[p.get('productId')?.value]" 
                             [class.active-rule]="p.get('quantity')?.value >= rule.minQuantity && p.get('quantity')?.value <= rule.maxQuantity">
                           <td>{{ rule.minQuantity }} - {{ rule.maxQuantity }} pzs</td>
-                          <td class="text-suggested">{{ rule.salePrice | currency:'MXN' }}</td>
+                          <td class="text-suggested">{{ rule.pricePerUnit | currency:'MXN' }}</td>
                         </tr>
                       </tbody>
                     </table>

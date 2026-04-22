@@ -9,6 +9,7 @@ import { SaleFormComponent } from './shared/sale-form-component/sale-form-compon
 import { CustomerFormModalComponent } from './shared/customer-form-modal-component/customer-form-modal-component';
 import { CustomerListComponent } from './shared/customer-list-component/customer-list-component';
 import { PurchaseListComponent } from './shared/purchase-list-component/purchase-list-component';
+import { SaleList } from './shared/sale-list/sale-list';
 
 export const routes: Routes = [
     {
@@ -46,5 +47,9 @@ export const routes: Routes = [
     {
         component: PurchaseListComponent,
         path: 'purchases'
+    },
+    {
+        component: SaleList,
+        path: 'sales-list'
     }
 ];

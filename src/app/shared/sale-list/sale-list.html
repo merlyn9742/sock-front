@@ -1,0 +1,94 @@
+<div class="main-content animate-fade-in">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1 fw-extrabold text-slate-900">Historial de Ventas</h1>
+      <p class="text-slate-500 mb-0">Gestiona tus transacciones y monitorea la utilidad neta.</p>
+    </div>
+    <button class="btn-primary-custom" routerLink="/sales/new">
+      <mat-icon>add</mat-icon>
+      <span>Nueva Venta</span>
+    </button>
+  </div>
+
+  <div class="glass-card overflow-hidden">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="sales" class="w-100 custom-table">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Folio </th>
+          <td mat-cell *matCellDef="let s"> 
+            <span class="folio-badge">#{{s.id}}</span> 
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Fecha </th>
+          <td mat-cell *matCellDef="let s">
+            <div class="d-flex flex-column">
+              <span class="text-slate-700 fw-medium">{{s.saleDate | date:'dd/MM/yyyy'}}</span>
+              <span class="text-slate-400 small">{{s.saleDate | date:'hh:mm a'}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef> Cliente </th>
+          <td mat-cell *matCellDef="let s"> 
+            <div class="d-flex align-items-center">
+              <div class="avatar-circle">{{ (s.customer?.name || 'V')[0] }}</div>
+              <span class="ms-2 fw-semibold text-slate-800">{{s.customer?.name || 'Venta de Mostrador'}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="items">
+          <th mat-header-cell *matHeaderCellDef> Detalle de Compra </th>
+          <td mat-cell *matCellDef="let s">
+            <div class="items-summary">
+              <div *ngFor="let item of s.saleItemDtoList" class="item-pill">
+                <span class="qty">{{item.quantity}}</span>
+                <span class="name">{{item.product?.name || item.bundle?.name || 'Desconocido'}}</span>
+                <mat-icon *ngIf="!item.purchaseItem" class="text-warning tiny-icon" matTooltip="Lote no encontrado">warning</mat-icon>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="financials">
+          <th mat-header-cell *matHeaderCellDef> Venta Bruta </th>
+          <td mat-cell *matCellDef="let s">
+            <div class="text-slate-900 fw-bold">{{s.grandTotal | currency}}</div>
+            <div class="text-tax">IVA incl. ({{s.taxIva | currency}})</div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="profit">
+          <th mat-header-cell *matHeaderCellDef> Utilidad Neta </th>
+          <td mat-cell *matCellDef="let s">
+            <div class="profit-container">
+              <span class="profit-amount text-success">+{{s.netProfit | currency}}</span>
+              <span class="isr-tag">ISR: {{s.taxIsr | currency}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let s">
+            <button mat-icon-button class="btn-delete-hover" (click)="confirmDelete(s.id)" matTooltip="Anular Venta">
+              <mat-icon>delete_sweep</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover-row"></tr>
+      </table>
+    </div>
+
+    <mat-paginator [length]="totalElements" [pageSize]="pageSize" 
+                   [pageSizeOptions]="[5, 10, 20, 50]" (page)="onPageChange($event)"
+                   class="custom-paginator">
+    </mat-paginator>
+  </div>
+</div>

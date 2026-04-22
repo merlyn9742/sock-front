@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SaleRequest, SaleResponse } from '../models/sales';
 import { Observable } from 'rxjs';
@@ -11,25 +11,21 @@ export class SaleService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Procesa una venta que puede contener productos individuales y/o bundles.
-   * @param saleRequest Objeto con customerId, productos y bundles.
-   */
   processSale(saleRequest: SaleRequest): Observable<SaleResponse> {
     return this.http.post<SaleResponse>(this.API_URL, saleRequest);
   }
 
-  /**
-   * Opcional: Obtener historial de ventas
-   */
-  getSalesHistory(): Observable<SaleResponse[]> {
-    return this.http.get<SaleResponse[]>(this.API_URL);
+  getSales(page: number, size: number): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sort', 'saleDate,desc'); // Ordenar por las más recientes
+    return this.http.get<any>(this.API_URL, { params });
   }
 
-  /**
-   * Opcional: Obtener detalle de una venta específica
-   */
-  getSaleById(id: number): Observable<SaleResponse> {
-    return this.http.get<SaleResponse>(`${this.API_URL}/${id}`);
+
+  deleteSale(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
+
 }

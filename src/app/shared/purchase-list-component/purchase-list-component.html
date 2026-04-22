@@ -4,19 +4,19 @@
     <header class="list-header">
       <div class="title-group">
         <h1>Entradas de Almacén</h1>
-        <p>Gestión de facturas y abastecimiento de inventario</p>
+        <p>Control de facturación y abastecimiento</p>
       </div>
       
       <div class="header-actions">
         <div class="quick-stats">
           <div class="mini-stat">
-            <span class="s-label">Inversión</span>
+            <span class="s-label">Inversión Total</span>
             <span class="s-value">{{ calculateTotalInvestment(purchases) | currency:'MXN' }}</span>
           </div>
         </div>
         <button class="btn-primary" (click)="openPurchaseModal()">
           <mat-icon>add_shopping_cart</mat-icon>
-          Registrar Compra
+          Nueva Compra
         </button>
       </div>
     </header>
@@ -24,53 +24,58 @@
     <div class="layout-grid-purchases">
       <div class="card purchase-card" *ngFor="let p of purchases">
         
-        <div class="purchase-main-info">
-          <div class="status-indicator"></div>
-          <div class="details">
-            <div class="supplier-row">
+        <div class="card-top">
+          <div class="supplier-info">
+            <div class="avatar-supplier">{{ p.supplierName.charAt(0) }}</div>
+            <div>
               <h3>{{ p.supplierName }}</h3>
-              <div class="date-group">
-              <span class="date-badge" title="Fecha de Registro">
-                {{ p.createdAt | date:'dd/MM/yyyy HH:mm' }}
-              </span>
-              <span *ngIf="p.updatedAt && p.updatedAt !== p.createdAt" class="update-badge" title="Última actualización">
-                <mat-icon>edit</mat-icon> {{ p.updatedAt | date:'shortTime' }}
-              </span>
+              <span class="folio">Folio #{{ p.id }}</span>
             </div>
-              <span class="date-badge">{{ p.purchaseDate | date:'MMM d, yyyy' }}</span>
-            </div>
-            <div class="financial-info">
-              <span class="amount-label">Monto Factura</span>
-              <span class="amount-value">{{ p.totalInvoiceAmount | currency:'MXN' }}</span>
-            </div>
+          </div>
+          <div class="financial-badge">
+             <span class="amount-value">{{ p.totalInvoiceAmount | currency:'MXN' }}</span>
+             <span class="amount-label">Monto Total</span>
           </div>
         </div>
 
-        <div class="items-summary">
-          <span class="summary-label">Detalle de mercancia:</span>
-          <div class="item-tags">
-            <div class="product-group" *ngFor="let item of p.purchaseItemsRequest">
-              <span class="product-tag main">
-                {{ item.product?.name || 'Producto' }} ({{ item.totalUnitsAcquired }} pzas)
-              </span>
-              <span class="product-tag main"> 
-                Stock disponible {{item.stockRemaining}}
-              </span>
-              <span class="product-tag bulk" *ngIf="item.isBulk">
-                {{ item.bulksReceived }} Bulto/s de {{ item.unitsPerBulk }}
-              </span>
+        <div class="items-section">
+          <div class="section-title">
+            <mat-icon>segment</mat-icon> Desglose de Mercancía
+          </div>
+          
+          <div class="product-list">
+            <div class="product-item" *ngFor="let item of p.purchaseItemsRequest">
+              <div class="item-main">
+                <span class="item-name">{{ item.product?.name || 'Producto sin nombre' }}</span>
+                <span class="item-qty">{{ item.totalUnitsAcquired }} uds.</span>
+              </div>
+              <div class="item-sub-details">
+                <span class="stock-info" [class.low-stock]="item.stockRemaining < 10">
+                  Stock: <strong>{{item.stockRemaining}}</strong>
+                </span>
+                <span class="cost-info">Costo: {{item.unitCostNet | currency}}</span>
+                <span class="bulk-info" *ngIf="item.isBulk">
+                   <mat-icon>Inventory</mat-icon> {{ item.bulksReceived }} bultos
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="purchase-footer">
-          <div class="purchase-id">Folio #{{ p.id }}</div>
+          <div class="date-info">
+            <div class="date-row">
+              <mat-icon>calendar_today</mat-icon> 
+              {{ p.purchaseDate | date:'dd MMM yyyy' }}
+            </div>
+          </div>
+          
           <div class="actions">
-            <button class="btn-icon view" title="Ver detalle">
+            <button class="btn-action view" matTooltip="Ver detalles">
               <mat-icon>visibility</mat-icon>
             </button>
-            <button class="btn-icon delete" (click)="deletePurchase(p.id!)" title="Eliminar">
-              <mat-icon>delete_sweep</mat-icon>
+            <button class="btn-action delete" (click)="deletePurchase(p.id!)" matTooltip="Eliminar">
+              <mat-icon>delete_outline</mat-icon>
             </button>
           </div>
         </div>
@@ -78,21 +83,19 @@
     </div>
 
     <div class="empty-state" *ngIf="purchases.length === 0">
-      <div class="empty-icon">
-        <mat-icon>inventory</mat-icon>
+      <div class="empty-illustration">
+        <mat-icon>inventory_2</mat-icon>
       </div>
-      <h3>No hay compras registradas</h3>
-      <p>Las facturas que registres aparecerán en este listado.</p>
-      <button class="btn-outline" (click)="openPurchaseModal()">Empezar ahora</button>
+      <h3>Sin registros de entrada</h3>
+      <p>Registra tus facturas para actualizar el stock y costos.</p>
+      <button class="btn-primary" (click)="openPurchaseModal()">Registrar Primera Compra</button>
     </div>
 
     <mat-paginator 
       [length]="totalElements"
       [pageSize]="pageSize"
-      [pageSizeOptions]="[1, 3, 5, 10, 25, 50]"
-      [pageIndex]="currentPage"
+      [pageSizeOptions]="[5, 10, 25]"
       (page)="onPageChange($event)"
-      aria-label="Seleccionar página de compras"
       class="custom-paginator">
     </mat-paginator>
 

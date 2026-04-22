@@ -130,7 +130,7 @@ export class SaleFormComponent implements OnInit {
     const activeRule = rules.find(r => qty >= r.minQuantity && qty <= r.maxQuantity);
 
     // Retorna el precio de la regla o el base si no hay regla aplicada
-    return activeRule ? activeRule.salePrice : product.basePrice;
+    return activeRule ? activeRule.pricePerUnit : product.basePrice;
   }
 
   get estimatedTotal(): number {
@@ -144,7 +144,7 @@ export class SaleFormComponent implements OnInit {
       }
     });
 
-    // Sumar Bundles con precio fijo
+    
     this.bundlesArray.value.forEach((item: any) => {
       const b = this.availableBundles.find(x => x.id == item.bundleId);
       if (b) {
