@@ -99,6 +99,16 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="row-hover"></tr>
       </table>
 
+
+      <mat-paginator 
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      (page)="onPageChange($event)"
+      aria-label="Seleccionar página de productos"
+      class="custom-paginator">
+    </mat-paginator>
+
       <div *ngIf="dataSource.data.length === 0 && !isLoading" class="empty-view">
         <div class="empty-illustration">
           <mat-icon>search_off</mat-icon>

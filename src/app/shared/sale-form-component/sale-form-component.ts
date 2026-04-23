@@ -49,7 +49,7 @@ export class SaleFormComponent implements OnInit {
 
   loadInitialData(): void {
     // Cargar Catálogos
-    this.productService.getAll().subscribe(data => this.products = data);
+    this.productService.getAllProducts().subscribe(data => this.products = data);
     this.bundleService.getAll().subscribe(data => this.availableBundles = data);
         
     this.customerService.getAll().subscribe({

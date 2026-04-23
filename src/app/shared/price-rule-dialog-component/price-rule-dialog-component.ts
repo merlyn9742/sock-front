@@ -54,7 +54,7 @@ export class PriceRuleDialogComponent implements OnInit {form: FormGroup;
   }
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe(res => this.products = res);
+    this.productService.getAllProducts().subscribe(res => this.products = res);
   }
 
   onCancel(): void {

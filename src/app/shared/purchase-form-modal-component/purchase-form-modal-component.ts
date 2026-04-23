@@ -31,7 +31,7 @@ export class PurchaseFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe(data => this.products = data);
+    this.productService.getAllProducts().subscribe(data => this.products = data);
     this.addItem(); // Iniciar con una fila
   }
 

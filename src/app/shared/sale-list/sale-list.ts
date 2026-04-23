@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sale-list',
-  imports: [CommonModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatTableModule],
+  imports: [CommonModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatTableModule, RouterModule],
   templateUrl: './sale-list.html',
   styleUrl: './sale-list.scss',
 })

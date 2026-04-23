@@ -1,202 +1,476 @@
-/* Variables de Diseño */
-$primary: #2563eb;
-$primary-dark: #1d4ed8;
-$text-main: #1e293b;
-$text-muted: #64748b;
-$bg-app: #f1f5f9;
-$border-color: #e2e8f0;
-$radius: 12px;
-$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+// --- Variables de Diseño ---
+:host {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: #e0e7ff;
+  --success: #10b981;
+  --danger: #ef4444;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --bg-canvas: #f9fafb;
+  --bg-card: #ffffff;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
+  display: block;
+  background-color: var(--bg-canvas);
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+// --- Contenedor y Layout ---
 .bundle-container {
   max-width: 1200px;
-  margin: 2.5rem auto;
-  padding: 0 1.5rem;
-}
-
-/* Header */
-.form-header {
-  margin-bottom: 2rem;
-  .header-main {
-    display: flex; gap: 1.25rem; align-items: flex-start;
-    .btn-back {
-      background: white; border: 1.5px solid $border-color; border-radius: 10px;
-      padding: 8px; cursor: pointer; color: $text-main; transition: all 0.2s;
-      &:hover { background: $bg-app; border-color: $text-muted; }
-    }
-    h1 { margin: 0; font-size: 1.75rem; font-weight: 800; color: $text-main; letter-spacing: -0.5px; }
-    p { margin: 4px 0 0; color: $text-muted; font-size: 0.95rem; }
+  margin: 0 auto;
+  padding: 2rem;
+  
+  &.animate-in {
+    animation: fadeIn 0.5s ease-out;
   }
 }
 
-/* Layout Grid */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .layout-grid {
   display: grid;
-  grid-template-columns: 1fr 350px;
+  grid-template-columns: 1fr 380px;
   gap: 2rem;
   align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Tarjetas */
-.card {
-  background: white; border-radius: $radius; border: 1.5px solid $border-color;
-  box-shadow: $shadow; padding: 1.5rem;
-}
+// --- Header ---
+.form-header {
+  margin-bottom: 2rem;
 
-/* Controles de Formulario Unificados */
-.field-control {
-  display: flex; flex-direction: column;
-  label { font-size: 11px; font-weight: 700; color: $text-muted; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
-  
-  input, select {
-    height: 44px; border: 1.5px solid $border-color; border-radius: 8px;
-    padding: 0 12px; font-size: 0.9rem; color: $text-main; background: white;
+  .header-main {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .btn-back {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     transition: all 0.2s;
-    &:focus { border-color: $primary; outline: none; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08); }
-    &::placeholder { color: #cbd5e1; }
-  }
-}
+    color: var(--text-muted);
 
-/* Fila de Items */
-.items-list {
-  .item-wrapper {
-    background: white; border: 1.5px solid $border-color; border-radius: $radius;
-    margin-bottom: 1.25rem; overflow: hidden; transition: border-color 0.2s;
-    &:hover { border-color: #cbd5e1; }
+    &:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateX(-3px);
+    }
   }
 
-  .item-row {
-    padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-end;
-    .field-product { flex: 3; }
-    .field-qty { width: 90px; }
-    .field-price { flex: 1.5; }
-    
-    .input-currency-wrapper {
-      position: relative;
-      .currency-symbol { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: $text-muted; font-weight: 600; }
-      input { padding-left: 28px; }
+  .header-text {
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+    }
+    p {
+      color: var(--text-muted);
+      margin: 0.25rem 0 0 0;
     }
   }
 }
 
-.action-control {
-  .btn-remove {
-    height: 44px; width: 44px; border: none; background: #fee2e2; color: #ef4444;
-    border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+// --- Componentes de Tarjeta (Cards) ---
+.card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.sticky-card {
+  position: sticky;
+  top: 2rem;
+}
+
+// --- Sección de Items (Productos) ---
+.items-section {
+  padding: 1.5rem;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      mat-icon { color: var(--primary); }
+      h3 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+    }
+  }
+
+  .btn-add-item {
+    background: #eff6ff;
+    color: var(--primary);
+    border: 1px dashed var(--primary);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover { background: #dbeafe; }
+  }
+}
+
+// --- Listado de Items ---
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.item-wrapper {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+  }
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 160px 42px;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+// --- Controles de Formulario ---
+.field-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  select, input {
+    height: 42px;
+    padding: 0 0.75rem;
+    background-color: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
     transition: all 0.2s;
-    &:hover { background: #ef4444; color: white; }
+
+    &:focus {
+      outline: none;
+      background-color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
   }
 }
 
-/* Sugerencias de Reglas */
+.input-currency-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .currency-symbol {
+    position: absolute;
+    left: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  input {
+    padding-left: 1.8rem;
+    width: 100%;
+  }
+}
+
+.btn-remove {
+  height: 42px;
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #9ca3af;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--danger);
+    background-color: #fef2f2;
+    border-color: #fecaca;
+  }
+}
+
+// --- Guía de Precios / Reglas ---
 .rules-hint {
-  background: #f8fafc; border-top: 1.5px dashed $border-color; padding: 1rem 1.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+
   .hint-header {
-    display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
-    color: $primary; margin-bottom: 12px;
-    mat-icon { font-size: 16px; width: 16px; height: 16px; }
-  }
-  .rules-table {
-    width: 100%; border-collapse: collapse;
-    th { text-align: left; font-size: 11px; color: $text-muted; text-transform: uppercase; padding-bottom: 8px; }
-    td { font-size: 13px; color: $text-main; padding: 6px 0; border-top: 1px solid #f1f5f9; }
-    .text-suggested { color: #10b981; font-weight: 700; }
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
   }
 }
 
-/* Resumen Lateral (Calculado) */
-.summary-card {
-  position: sticky; top: 2rem;
-  .summary-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; color: $text-main; mat-icon { color: $primary; } h3 { margin: 0; font-size: 1.1rem; font-weight: 800; } }
+.rules-table-container {
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.rules-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+
+  th { text-align: left; padding: 0.5rem; color: var(--text-muted); font-weight: 500; border-bottom: 1px solid #e2e8f0; }
+  td { padding: 0.5rem; color: var(--text-main); }
   
-  .main-price-display {
-    background: #f1f5f9; border: 2px solid $border-color; border-radius: 12px;
-    position: relative; padding: 8px 15px; margin-top: 5px;
-    .price-symbol { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 900; color: $primary; }
-    input { background: transparent; border: none; width: 100%; font-size: 2rem; font-weight: 900; color: $primary; padding-left: 30px; cursor: default; }
+  .text-suggested {
+    color: #059669;
+    font-weight: 700;
+    background: #ecfdf5;
+    border-radius: 4px;
+    padding: 2px 6px;
   }
-  .helper-text { font-size: 11px; color: $text-muted; margin-top: 6px; display: block; }
 }
 
-.math-details {
-  margin: 1.5rem 0;
-  .math-row {
-    display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: $text-muted;
-    &.total { border-top: 1.5px solid $border-color; padding-top: 12px; margin-top: 12px; color: $text-main; font-weight: 800; .val.highlight { color: $primary; font-size: 1.25rem; } }
+// --- Sidebar / Resumen ---
+.summary-card {
+  padding: 1.5rem;
+
+  .summary-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    mat-icon { color: var(--primary); }
+    h3 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+  }
+
+  .main-price-display {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+
+    .price-symbol { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-right: 0.5rem; }
+    input {
+      background: transparent;
+      border: none;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text-main);
+      width: 100%;
+      text-align: right;
+      outline: none;
+    }
+  }
+
+  .helper-text {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    mat-icon { font-size: 14px; width: 14px; height: 14px; }
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 1.5rem 0;
+  }
+
+  .math-details {
+    .math-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+
+      &.total {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px dashed var(--border-color);
+        color: var(--text-main);
+        font-weight: 800;
+        font-size: 1.2rem;
+        .highlight { color: var(--success); }
+      }
+    }
   }
 }
 
 .summary-actions {
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+
+  button {
+    height: 48px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+  }
+
   .btn-save {
-    background: $primary; color: white; border: none; padding: 14px; border-radius: 10px;
-    font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-    &:hover { background: $primary-dark; transform: translateY(-1px); }
-    &:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+    background: var(--primary);
+    color: white;
+    &:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    &:disabled { background: var(--border-color); cursor: not-allowed; transform: none; }
   }
+
   .btn-cancel {
-    background: transparent; border: 1.5px solid $border-color; color: $text-muted;
-    padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer;
-    &:hover { background: #fef2f2; border-color: #fecaca; color: #ef4444; }
+    background: transparent;
+    color: var(--text-muted);
+    &:hover { background: #fee2e2; color: #dc2626; }
   }
 }
 
-/* Animaciones */
-.animate-in { animation: fadeIn 0.4s ease-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Responsivo */
-@media (max-width: 992px) {
-  .layout-grid { grid-template-columns: 1fr; }
-  .side-column { position: static; }
+// --- Estado Vacío ---
+.empty-items {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+  mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.3; }
+  p { font-size: 0.9rem; font-weight: 500; }
 }
 
-.btn-add-item {
-  // Disposición y Alineación
+.mb-4 { margin-bottom: 1rem; }
+
+/* Botón de Preview Estilo Moderno */
+.btn-preview {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  color: #334155;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  
-  // Dimensiones y Espaciado
-  padding: 8px 16px;
-  height: 40px;
-  
-  // Estilo Visual
-  background-color: #2563eb; // Azul primario consistente con tu marca
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  
-  // Tipografía
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s;
 
-  // Icono (si usas mat-icon)
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  // Estados
-  &:hover {
-    background-color: #1d4ed8; // Un tono más oscuro al pasar el mouse
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-  }
-
-  &:active {
-    background-color: #1e40af;
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    background-color: #94a3b8;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+  &:hover:not(:disabled) {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #2563eb;
   }
 }
+
+/* Caja de Reporte Financiero */
+.financial-report-box {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border: 1px solid #e2e8f0;
+
+  .report-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 12px;
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+
+  .report-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    .report-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      label { color: #64748b; }
+      .value { font-weight: 700; }
+      &.highlight {
+        margin-top: 4px;
+        padding-top: 8px;
+        border-top: 1px dashed #cbd5e1;
+        .value { font-size: 16px; }
+      }
+    }
+  }
+
+  .profit-badge {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px;
+    background: #dcfce7;
+    color: #15803d;
+    border-radius: 6px;
+    &.negative { background: #fee2e2; color: #b91c1c; }
+  }
+}
+
+.text-success { color: #10b981; }
+.text-warning { color: #f59e0b; }

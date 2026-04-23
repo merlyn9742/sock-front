@@ -46,7 +46,7 @@
                   <label>P. Unitario Asignado</label>
                   <div class="input-currency-wrapper">
                     <span class="currency-symbol">$</span>
-                    <input type="number" formControlName="assignedUnitPrice" placeholder="0.00">
+                    <input type="number" formControlName="assignedUnitPrice" placeholder="0.01">
                   </div>
                 </div>
 
@@ -124,7 +124,39 @@
             </div>
           </div>
 
+          <div class="financial-report-box animate-in" *ngIf="financialReport">
+  <div class="report-header">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <span>Resultado del Análisis</span>
+  </div>
+  
+  <div class="report-grid">
+    <div class="report-item">
+      <label>IVA Neto (SAT)</label>
+      <span class="value text-warning">{{ financialReport.totalOrderTax | currency:'MXN' }}</span>
+    </div>
+    <div class="report-item">
+      <label>ISR Estimado</label>
+      <span class="value text-warning">{{ financialReport.totalIsr | currency:'MXN' }}</span>
+    </div>
+    <div class="report-item highlight">
+      <label>Ganancia Neta Real</label>
+      <span class="value text-success">{{ financialReport.totalOrderProfit | currency:'MXN' }}</span>
+    </div>
+  </div>
+  
+  <div class="profit-badge" [class.negative]="financialReport.totalOrderProfit <= 0">
+    {{ (financialReport.totalOrderProfit / financialReport.totalOrderSale) | percent:'1.1-1' }} de margen
+  </div>
+</div>
+
           <footer class="summary-actions">
+<button type="button" 
+        class="btn-preview" 
+        (click)="showFinancialPreview()" 
+        [disabled]="items.invalid || isAnalyzing"> <mat-icon *ngIf="!isAnalyzing">analytics</mat-icon>
+    <span>{{ isAnalyzing ? 'Analizando...' : 'Ver Ganancia Estimada' }}</span>
+</button>
             <button type="submit" class="btn-save" [disabled]="bundleForm.invalid">
               <mat-icon>save</mat-icon>
               Guardar Cambios

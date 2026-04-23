@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,13 +15,15 @@ import Swal from 'sweetalert2';
 import { ProductFormDialog } from '../product-form-dialog/product-form-dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product',
   standalone: true,
   imports: [
     CommonModule, MatIconModule, MatButtonModule, 
-    MatMenuModule, MatTableModule, MatCardModule, MatDialogModule, MatProgressBarModule, MatDividerModule
+    MatMenuModule, MatTableModule, MatCardModule, MatDialogModule, MatProgressBarModule, MatDividerModule,
+    MatPaginatorModule
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
@@ -33,33 +35,49 @@ export class ProductComponent implements OnInit {
   categories: Category[] = [];
   isLoading = true;
   displayedColumns: string[] = ['product', 'gender', 'stock', 'price', 'actions'];
+totalElements = 0;
+  pageSize = 10;
+  currentPage = 0;
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.loadData();
+    setTimeout(() => {
+      this.loadData();
+    }, 0);
   }
 
 loadData(): void {
     this.isLoading = true;
+    this.cd.detectChanges(); // 4. Forzar detección antes de la petición
     this.categoryService.getAll().subscribe(cats => this.categories = cats);
     
-    this.productService.getAll().subscribe({
-      next: (data) => {
-        this.dataSource.data = data; // Asignamos a dataSource
+    // Llamada con paginación
+    this.productService.getAll(this.currentPage, this.pageSize).subscribe({
+      next: (response) => {
+        // En Spring, los datos vienen en .content
+        this.dataSource.data = response.content;
+        this.totalElements = response.totalElements;
         this.isLoading = false;
+        this.cd.detectChanges(); // 4. Forzar detección antes de la petición
       },
-      error: (err) => {
-        this.isLoading = false;
+      error: () => {
+        this.isLoading = false
+        this.cd.detectChanges();
       }
     });
   }
 
-  
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadData();
+  }
 
   openProductModal(productToEdit?: Product): void {
     const dialogRef = this.dialog.open(ProductFormDialog, {

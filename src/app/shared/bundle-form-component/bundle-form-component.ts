@@ -8,6 +8,7 @@ import { PriceRule } from '../../models/PriceRule';
 import { BundleDTO, BundleItemDTO, BundleService } from '../../services/bundle-service';
 import { ProductService } from '../../services/product-service';
 import { PriceRuleService } from '../../services/price-rule-service';
+import { FinancialService } from '../../services/financial-service';
 
 @Component({
   selector: 'app-bundle-form-component',
@@ -21,12 +22,15 @@ export class BundleFormComponent implements OnInit {
   isEditMode = false;
   products: any[] = [];
   rulesByItem: { [key: number]: PriceRule[] } = {};
+  financialReport: any = null;
+  isAnalyzing = false;
 
   constructor(
     private fb: FormBuilder,
     private bundleService: BundleService,
     private productService: ProductService,
     private priceRuleService: PriceRuleService,
+    private financialService: FinancialService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef
@@ -48,7 +52,7 @@ export class BundleFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe(data => {
+    this.productService.getAllProducts().subscribe(data => {
       this.products = data;
       const id = this.route.snapshot.params['id'];
       
@@ -149,4 +153,30 @@ export class BundleFormComponent implements OnInit {
       this.bundleService.save(bundle).subscribe(() => this.onCancel());
     }
   }
+
+  showFinancialPreview(): void {
+  const formValue = this.bundleForm.getRawValue();
+  
+  // Mapeamos al formato que espera el backend (BundleItem)
+  const bundleItems = formValue.items.map((item: any) => ({
+    product: {id: item.productId},
+    quantity: item.quantity,
+    assignedUnitPrice: item.assignedUnitPrice
+  }));
+
+  if (bundleItems.length === 0) return;
+
+  this.isAnalyzing = true;
+  this.financialService.calculateBundleFinancial(bundleItems).subscribe({
+    next: (report) => {
+      this.financialReport = report;
+      this.isAnalyzing = false;
+      this.cdr.detectChanges();
+    },
+    error: () => {
+      this.isAnalyzing = false;
+      this.cdr.detectChanges();
+    }
+  });
+}
 }
